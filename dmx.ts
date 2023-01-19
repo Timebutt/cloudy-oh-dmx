@@ -35,7 +35,6 @@ const lastValuesPerBulb: Record<
         );
         parser.on('data', async (data) => {
             const dmxData = data.toJSON().data.slice(6, data.length - 7);
-            console.log(dmxData);
             for (const bulb of bulbs) {
                 // There's not enough DMX data for a fixture mapped to this address
                 if (dmxData.length < bulb.dmxAddress + dmxChannels) {
@@ -64,6 +63,18 @@ const lastValuesPerBulb: Record<
                     if (brightness > 0) {
                         await setColorRGB(bulb.ipAddress, red, green, blue, coolWhite, warmWhite);
                     }
+
+                    console.log(
+                        'Updated values for bulb',
+                        bulb.ipAddress,
+                        bulb.dmxAddress,
+                        red,
+                        green,
+                        blue,
+                        coolWhite,
+                        warmWhite,
+                        brightness
+                    );
                 }
             }
         });
