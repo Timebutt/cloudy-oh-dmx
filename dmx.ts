@@ -65,6 +65,8 @@ const lastValuesPerBulb: Record<
                 }
             }
         });
+    } else {
+        console.log('DMX interface not found, exiting!');
     }
 })();
 
