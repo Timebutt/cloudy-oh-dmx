@@ -1,0 +1,21 @@
+{
+  "name": "artnet-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "esr node.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dmx": "^0.2.5",
+    "dmxnet": "^0.9.0",
+    "serialport": "^10.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "esbuild-runner": "^2.2.2",
+    "prettier": "^2.8.3"
+  }
+}

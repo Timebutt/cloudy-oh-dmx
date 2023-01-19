@@ -1,0 +1,61 @@
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/dist-server
+/tmp
+/out-tsc
+/electron/dist
+/functions/dist
+/.angular/cache
+
+# dependencies
+/**/node_modules/*
+/functions/node_modules
+/bower_components
+yarn-error.log
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.scannerwork
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Backups
+/backups
+
+# Firebase related files
+/.firebase
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Secrets
+.sentryclirc
+.vscode/settings.json
+/functions/src/service-account.json
+/functions/.runtimeconfig.json
+
+# Cypress
+cypress/videos
+cypress/screenshots
