@@ -19,6 +19,7 @@ const lastValuesPerBulb: Record<
     const dmxProInterface = portInfo.find((port) => port.manufacturer === 'ENTTEC');
 
     if (dmxProInterface) {
+        console.log('Enttec DMX interface found - starting listener!');
         const port = new SerialPort({
             path: dmxProInterface.path,
             baudRate: 250000,
@@ -66,7 +67,7 @@ const lastValuesPerBulb: Record<
             }
         });
     } else {
-        console.log('DMX interface not found, exiting!');
+        console.log('Enttec DMX interface not found, exiting!');
     }
 })();
 
