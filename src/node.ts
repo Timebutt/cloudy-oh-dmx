@@ -20,12 +20,6 @@ const receiver = artnetNode.newReceiver({
 });
 
 receiver.on('data', async (data) => {
-    // console.log('DMX data:', data);
-
-    // TO-DO: hier dan data doorgeven aan WiZ shizzle
-    // console.log(new Date() + ' ' + data[3]);
-    // console.log(data[0]);
-
     const brightness = calculateBrightness(data[0]);
 
     if (shouldUpdateValues('192.168.0.198', data[1], data[2], data[3], brightness)) {
@@ -42,7 +36,7 @@ receiver.on('data', async (data) => {
         await setBrightness('192.168.0.198', brightness);
 
         if (brightness > 0) {
-            await setColorRGB('192.168.0.198', data[1], data[2], data[3]);
+            await setColorRGB('192.168.0.198', data[1], data[2], data[3], 0, 0);
         }
     }
 });
@@ -74,19 +68,3 @@ function shouldUpdateValues(address: string, r: number, g: number, b: number, br
 
     return false;
 }
-
-// async function dinges() {
-//     // console.log(command);
-//     // console.log(command.getDimming('192.168.0.198'));
-//     console.log(command.getRGB('192.168.0.198'));
-
-//     // // command.setOnOff('192.168.0.198', false);
-//     await command.setOnOff('192.168.0.198', false);
-
-//     // command.setBrightness('192.168.0.198', 12);
-//     await command.setColorRGB('192.168.0.198', 255, 0, 0);
-
-//     // await command.setOnOff('192.168.0.198', false);
-// }
-
-// dinges();

@@ -4,7 +4,7 @@ const Dgram = require('dgram');
 const util = require('util');
 
 const client = Dgram.createSocket('udp4');
-client.on('message', function (msg, info) {
+client.on('message', function (msg: Buffer, info: Object) {
     const JSonObj = msg.toString('utf8');
 
     console.log(JSonObj);
@@ -13,75 +13,8 @@ client.on('message', function (msg, info) {
 
 const PORT = 38899;
 
-var adress = null;
 var success = false;
-var state = false;
-var mac = null;
-var dimming = 50;
-var temp = 2700;
-var sceneId = 0;
 var speed = 0;
-var red = 255;
-var green = 255;
-var blue = 240;
-var ccol = 0;
-var wcol = 0;
-var func = [];
-
-export function getStart(address: string) {
-    return getState(address);
-}
-
-export function getMacAdr(address) {
-    success = false;
-    getFunctions(address);
-    return mac;
-}
-
-export function getState(address: string) {
-    success = false;
-    getFunctions(address);
-    return state;
-}
-
-export function getDimming(address: string) {
-    success = false;
-    getFunctions(address);
-    return dimming;
-}
-
-export function getTemperature(address: string) {
-    success = false;
-    getFunctions(address);
-    return temp;
-}
-
-export function getRGB(address: string) {
-    success = false;
-    getFunctions(address);
-    return [red, green, blue];
-}
-
-export function getScene(address) {
-    success = false;
-    getFunctions(address);
-    return sceneId;
-}
-
-export function getSpeed(address) {
-    success = false;
-    getFunctions(address);
-    return speed;
-}
-
-export function getFunctions(address) {
-    adress = address;
-    // Function order: onoff, dimming, temperature, color, scenery
-    success = false;
-    var msg = '{"method":"getPilot","params":{}}';
-    getMessage(msg, adress);
-    return func;
-}
 
 export function setOnOff(address: string, value: boolean) {
     success = false;
@@ -99,18 +32,15 @@ export async function setBrightness(address: string, level: number) {
     if (level >= 10) {
         const message = { method: 'setPilot', params: { dimming: Math.min(level, 100) } };
 
-        // var msg = util.format('{"method":"setPilot","params":{"dimming":%d}}', Math.min(level, 100));
         await sendMessage(JSON.stringify(message), address);
     } else if (level < 10) {
         await setOnOff(address, false);
     }
-
-    // }
 }
 
-export function setLightTemp(address, level) {
+export function setLightTemp(address: string, level: number) {
     success = false;
-    if ((level) => 2200 && level <= 6500) {
+    if (level >= 2200 && level <= 6500) {
         var msg = util.format('{"method":"setPilot","params":{"temp":%d}}', level);
         sendMessage(msg, address);
     }
@@ -124,37 +54,31 @@ export function setColorRGB(address: string, red: number, green: number, blue: n
                 const message = {
                     method: 'setPilot',
                     params: {
-                        r: red,
-                        g: green,
-                        b: blue,
-                        c: coolWhite,
-                        w: warmWhite,
+                        r: Math.round(red),
+                        g: Math.round(green),
+                        b: Math.round(blue),
+                        c: Math.round(coolWhite),
+                        w: Math.round(warmWhite),
                     },
                 };
 
-                // var msg = util.format(
-                //     '{"method":"setPilot","params":{"r":%d,"g":%d,"b":%d}}',
-                //     Math.round(red),
-                //     Math.round(green),
-                //     Math.round(blue)
-                // );
                 sendMessage(JSON.stringify(message), address);
             }
         }
     }
 }
 
-export function onLightScene(address, scene) {
+export function onLightScene(address: string, scene: number) {
     success = false;
-    if ((scene) => 1 && scene <= 32) {
-        if ((speed) => 0 && speed <= 100) {
+    if (scene >= 1 && scene <= 32) {
+        if (speed >= 0 && speed <= 100) {
             var msg = util.format('{"method":"setPilot","params":{"sceneId":%d}}', scene);
             sendMessage(msg, address);
         }
     }
 }
 
-export function onLightSpeed(address, speed) {
+export function onLightSpeed(address: string, speed: number) {
     success = false;
     var msg = util.format('{"method":"setPilot","params":{"speed":%d}}', speed);
     sendMessage(msg, address);
@@ -176,7 +100,7 @@ export function sendMessage(message, address: string) {
     });
 }
 
-export function getMessage(message, adr) {
+export function getMessage(message, adr: string) {
     return new Promise(function (resolve, reject) {
         const client = Dgram.createSocket('udp4');
 
@@ -184,7 +108,7 @@ export function getMessage(message, adr) {
             //				console.log('unhandledRejection', error.message);
         });
 
-        client.on('message', function (msg, info) {
+        client.on('message', (msg, info) => {
             client.close();
             success = true;
 
