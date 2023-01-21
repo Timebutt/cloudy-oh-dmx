@@ -31,6 +31,7 @@ const lastValuesPerBulb: Record<
                 packetOverhead: 5,
                 lengthBytes: 2,
                 lengthOffset: 2,
+                maxLen: 1024,
             })
         );
         parser.on('data', async (data) => {
