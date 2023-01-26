@@ -4,7 +4,7 @@
   "description": "DMX transceiver for Cloudy-Oh cloud lights",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && npm run stop && forever start ./dist/dmx.js",
+    "start": "tsc && npm run stop && forever start ./dist/dmx.js && forever start ./front-end/node_modules/http-server/bin/http-server ./front-end/dist -p 3000 -d false",
     "stop": "forever stopall",
     "show-logs": "forever logs"
   },

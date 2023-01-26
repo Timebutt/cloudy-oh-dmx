@@ -8,5 +8,6 @@
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true
     },
-    "includes": ["./src/**/*"]
+    "includes": ["./src/**/*"],
+    "exclude": ["./front-end"]
 }

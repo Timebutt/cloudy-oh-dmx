@@ -221,13 +221,6 @@ createServer(async (request, response) => {
                         return;
                     }
 
-                    // const bulb = wikariBulbs[ipAddress];
-                    // if (!bulb) {
-                    //     response.writeHead(400);
-                    //     response.end('No such bulb');
-                    //     return;
-                    // }
-
                     await setBrightness(ipAddress, calculateBrightness((parseInt(brightness, 10) / 100) * 255));
                     break;
                 }
